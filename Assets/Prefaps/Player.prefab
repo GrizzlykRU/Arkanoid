@@ -98,8 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leftBorder: {fileID: 0}
   _rightBorder: {fileID: 0}
-  mouseSensitivity: 1.5
   speed: 0.3
+  joystick: {fileID: 0}
 --- !u!61 &1983155532
 BoxCollider2D:
   m_ObjectHideFlags: 0
