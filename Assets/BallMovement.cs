@@ -81,7 +81,9 @@ public class BallMovement : MonoBehaviour
 
                 if (obstacle.tag == "Obstacle")
                 {
-                    obstacle.GetComponent<ObstacleCollision>().collision = true;
+                    ObstacleCollision collision = obstacle.GetComponent<ObstacleCollision>();
+                    collision.animator.enabled = true;
+                    collision.collision = true;
                     obstacleCount--;
                     if (obstacleCount == 0)
                     {
