@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,12 @@ public class GameManager : MonoBehaviour
     public GameObject completeLevelUI;
 
     public GameObject pauseMenuUI;
+
+    //public List<GameObject> obstacles;
+
+    //public GameObject ball;
+
+    //public GameObject player;
 
     public static bool gameIsActive = true;
 
@@ -26,7 +33,6 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
                 pauseMenuUI.SetActive(false);
             }
-
         }
     }
 

@@ -15,11 +15,13 @@ public class BallMovement : MonoBehaviour
 
     public bool isActive = false;
 
-    public float speed = 0.5f;
+    public float speed = 1.0f;
 
     private Vector3 direction;
 
     private Vector3 position;
+
+    private float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width/2.0f; }
 
     private void Awake()
     {
@@ -62,7 +64,7 @@ public class BallMovement : MonoBehaviour
 
         foreach (var obstacle in obstacles)
         {
-            if(obstacle.tag == "Obstacle")
+            if (obstacle.tag == "Obstacle")
             {
                 if (obstacle.GetComponent<ObstacleCollision>().collision)
                 {
@@ -72,6 +74,7 @@ public class BallMovement : MonoBehaviour
             }
             if (CollisionCheck(obstacle))
             {
+                Debug.Log("Collision");
                 if (obstacle.name == "BottomBorder")
                 {
                     _gameManager.GameOver();
@@ -97,18 +100,20 @@ public class BallMovement : MonoBehaviour
 
     private bool CollisionCheck(GameObject obstacle)
     {
+        float obstacleWidth = obstacle.GetComponent<RectTransform>().rect.width;
+        float obstacleHeight = obstacle.GetComponent<RectTransform>().rect.height;
         float distanceX = Math.Abs(position.x - obstacle.transform.position.x);
         float distanceY = Math.Abs(position.y - obstacle.transform.position.y);
 
-        if (distanceX > (obstacle.transform.localScale.x / 2.0f + transform.localScale.x / 2.0f)) { return false; }
-        if (distanceY > (obstacle.transform.localScale.y / 2.0f + transform.localScale.x / 2.0f)) { return false; }
+        if (distanceX > (obstacleWidth / 2.0f + ballRadius)) { return false; }
+        if (distanceY > (obstacleHeight / 2.0f + ballRadius)) { return false; }
 
-        if (distanceX <= (obstacle.transform.localScale.x / 2.0f)) { return true; }
-        if (distanceY <= (obstacle.transform.localScale.y / 2.0f)) { return true; }
+        if (distanceX <= (obstacleWidth / 2.0f)) { return true; }
+        if (distanceY <= (obstacleHeight / 2.0f)) { return true; }
 
-        float distance = (distanceX - obstacle.transform.localScale.x / 2.0f) * (distanceX - obstacle.transform.localScale.x / 2.0f) + (distanceY - obstacle.transform.localScale.y / 2)* (distanceY - obstacle.transform.localScale.y / 2);
+        float distance = (distanceX - obstacleWidth / 2.0f) * (distanceX - obstacleWidth / 2.0f) + (distanceY - obstacleHeight / 2.0f) * (distanceY - obstacleHeight / 2.0f);
 
-        return distance <= transform.localScale.x* transform.localScale.x;
+        return distance <= ballRadius * ballRadius;
     }
     
     private Vector3 GetReflection(GameObject obstacle)
@@ -116,17 +121,21 @@ public class BallMovement : MonoBehaviour
         Vector3 dot1;
         Vector3 dot2;
         Vector3 dot3;
-        if (position.x <= obstacle.transform.position.x - obstacle.transform.localScale.x / 2 || position.x >= obstacle.transform.position.x + obstacle.transform.localScale.x / 2)
+
+        float obstacleWidth = obstacle.GetComponent<RectTransform>().rect.width;
+        float obstacleHeight = obstacle.GetComponent<RectTransform>().rect.height;
+
+        if (position.x <= obstacle.transform.position.x - obstacleWidth / 2.0f || position.x >= obstacle.transform.position.x + obstacleWidth / 2.0f)
         {
-            dot1 = new Vector3(obstacle.transform.position.x - obstacle.transform.localScale.x / 2, obstacle.transform.position.y - obstacle.transform.localScale.y / 2, 0);
-            dot2 = new Vector3(obstacle.transform.position.x - obstacle.transform.localScale.x / 2, obstacle.transform.position.y + obstacle.transform.localScale.y / 2, 1);
-            dot3 = new Vector3(obstacle.transform.position.x - obstacle.transform.localScale.x / 2, obstacle.transform.position.y, -1);
+            dot1 = new Vector3(obstacle.transform.position.x - obstacleWidth / 2.0f, obstacle.transform.position.y - obstacleHeight / 2.0f, 0);
+            dot2 = new Vector3(obstacle.transform.position.x - obstacleWidth / 2.0f, obstacle.transform.position.y + obstacleHeight / 2.0f, 1);
+            dot3 = new Vector3(obstacle.transform.position.x - obstacleWidth / 2.0f, obstacle.transform.position.y, -1);
         }
         else
         {
-            dot1 = new Vector3(obstacle.transform.position.x - obstacle.transform.localScale.x / 2, obstacle.transform.position.y + obstacle.transform.localScale.y / 2, 0);
-            dot2 = new Vector3(obstacle.transform.position.x + obstacle.transform.localScale.x / 2, obstacle.transform.position.y + obstacle.transform.localScale.y / 2, 1);
-            dot3 = new Vector3(obstacle.transform.position.x, obstacle.transform.position.y + obstacle.transform.localScale.y / 2, -1);
+            dot1 = new Vector3(obstacle.transform.position.x - obstacleWidth / 2.0f, obstacle.transform.position.y + obstacleHeight / 2.0f, 0);
+            dot2 = new Vector3(obstacle.transform.position.x + obstacleWidth / 2.0f, obstacle.transform.position.y + obstacleHeight / 2.0f, 1);
+            dot3 = new Vector3(obstacle.transform.position.x, obstacle.transform.position.y + obstacleHeight / 2.0f, -1);
         }
         Vector3 side1 = dot1 - dot2;
         Vector3 side2 = dot3 - dot2;
