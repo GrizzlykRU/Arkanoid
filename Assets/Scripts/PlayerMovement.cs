@@ -23,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float borderWidth = _leftBorder.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
         float width = gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
-        //position.x += joystick.Horizontal * speed;
-        //joystick.gameObject.transform.position = position;
         if (Input.GetMouseButton(0))
         {
             var pos = Input.mousePosition;

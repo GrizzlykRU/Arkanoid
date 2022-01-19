@@ -5,15 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenuUI;
-
-
     // Start is called before the first frame update
     public void Resume()
     {
         GameManager.gameIsActive = true;
         Time.timeScale = 1f;
-        pauseMenuUI.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void ReturnToMainMenu()

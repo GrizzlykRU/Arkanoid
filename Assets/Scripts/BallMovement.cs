@@ -9,11 +9,7 @@ public class BallMovement : MonoBehaviour
 
     public GameObject _canvas;
 
-    public GameManager _gameManager;
-
-    public List<GameObject> obstacles;
-
-    private int obstacleCount;
+    public int obstacleCount = 0;
 
     public bool isActive = false;
 
@@ -27,7 +23,6 @@ public class BallMovement : MonoBehaviour
 
     private void Start()
     {
-        obstacleCount = GameObject.FindGameObjectsWithTag("Obstacle").Length;
         position = gameObject.transform.position;
         direction = new Vector3(0.1f, 1.0f, 0);
         speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
@@ -52,13 +47,12 @@ public class BallMovement : MonoBehaviour
         }  
         else
         {
-            GetCollision();
             position += direction * speed;
             transform.position = position;
         }
     }
 
-    private void GetCollision()
+    public void GetCollision(List<GameObject> obstacles)
     {
 
         foreach (var obstacle in obstacles)
@@ -69,13 +63,13 @@ public class BallMovement : MonoBehaviour
                 {
                     continue;
                 }
-               
+
             }
             if (CollisionCheck(obstacle))
             {
                 if (obstacle.name == "BottomBorder")
                 {
-                    _gameManager.GameOver();
+                    FindObjectOfType<GameManager>().GameOver();
                 }
                 
                 direction = GetReflection(obstacle);
@@ -106,12 +100,14 @@ public class BallMovement : MonoBehaviour
         if (distanceX > (obstacleWidth / 2.0f + ballRadius)) { return false; }
         if (distanceY > (obstacleHeight / 2.0f + ballRadius)) { return false; }
 
-        if (distanceX <= (obstacleWidth / 2.0f)) { return true; }
-        if (distanceY <= (obstacleHeight / 2.0f)) { return true; }
+        return true;
 
-        float distance = (distanceX - obstacleWidth / 2.0f) * (distanceX - obstacleWidth / 2.0f) + (distanceY - obstacleHeight / 2.0f) * (distanceY - obstacleHeight / 2.0f);
+        //if (distanceX <= (obstacleWidth / 2.0f)) { return true; }
+        //if (distanceY <= (obstacleHeight / 2.0f)) { return true; }
 
-        return distance <= ballRadius * ballRadius;
+        //float distance = (distanceX - obstacleWidth / 2.0f) * (distanceX - obstacleWidth / 2.0f) + (distanceY - obstacleHeight / 2.0f) * (distanceY - obstacleHeight / 2.0f);
+
+        //return distance <= ballRadius * ballRadius;
     }
     
     private Vector3 GetReflection(GameObject obstacle)
