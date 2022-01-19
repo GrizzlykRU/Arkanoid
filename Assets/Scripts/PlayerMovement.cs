@@ -6,20 +6,23 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject _leftBorder;
 
+    public GameObject _canvas;
+
     public GameObject _rightBorder;
 
     public float speed = 1.0f;
 
     private Vector3 position;
 
-    private void Awake()
+    private void Start()
     {
         position = gameObject.transform.position;
     }
 
     private void FixedUpdate()
     {
-        float borderWidth = _leftBorder.GetComponent<RectTransform>().rect.width;
+        float borderWidth = _leftBorder.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
+        float width = gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
         //position.x += joystick.Horizontal * speed;
         //joystick.gameObject.transform.position = position;
         if (Input.GetMouseButton(0))
@@ -28,16 +31,16 @@ public class PlayerMovement : MonoBehaviour
             position = new Vector3(pos.x, transform.position.y);
         }
 
-        float leftBorder = _leftBorder.transform.position.x + _leftBorder.GetComponent<RectTransform>().rect.width / 2,
-              rightBorder = _rightBorder.transform.position.x - _rightBorder.GetComponent<RectTransform>().rect.width / 2;
+        float leftBorder = _leftBorder.transform.position.x + borderWidth / 2.0f,
+              rightBorder = _rightBorder.transform.position.x - borderWidth / 2.0f;
 
-        if (position.x - gameObject.GetComponent<RectTransform>().rect.width / 2 < leftBorder)
+        if (position.x - width / 2.0f < leftBorder)
         {
-            position.x = leftBorder + gameObject.GetComponent<RectTransform>().rect.width / 2;
+            position.x = leftBorder + width / 2.0f;
         }
-        else if (position.x + gameObject.GetComponent<RectTransform>().rect.width / 2 > rightBorder)
+        else if (position.x + width / 2.0f > rightBorder)
         {
-            position.x = rightBorder - gameObject.GetComponent<RectTransform>().rect.width / 2;
+            position.x = rightBorder - width / 2.0f;
         }
 
         transform.position = position;

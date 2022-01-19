@@ -7,6 +7,8 @@ public class BallMovement : MonoBehaviour
 {
     public GameObject _player;
 
+    public GameObject _canvas;
+
     public GameManager _gameManager;
 
     public List<GameObject> obstacles;
@@ -21,17 +23,14 @@ public class BallMovement : MonoBehaviour
 
     private Vector3 position;
 
-    private float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width/2.0f; }
-
-    private void Awake()
-    {
-        position = gameObject.transform.position;
-        direction = new Vector3(0.1f, 1.0f, 0);
-    }
+    private float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width /2.0f; }
 
     private void Start()
     {
         obstacleCount = GameObject.FindGameObjectsWithTag("Obstacle").Length;
+        position = gameObject.transform.position;
+        direction = new Vector3(0.1f, 1.0f, 0);
+        speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
     }
     private void FixedUpdate()
     {
@@ -74,7 +73,6 @@ public class BallMovement : MonoBehaviour
             }
             if (CollisionCheck(obstacle))
             {
-                Debug.Log("Collision");
                 if (obstacle.name == "BottomBorder")
                 {
                     _gameManager.GameOver();
@@ -100,8 +98,8 @@ public class BallMovement : MonoBehaviour
 
     private bool CollisionCheck(GameObject obstacle)
     {
-        float obstacleWidth = obstacle.GetComponent<RectTransform>().rect.width;
-        float obstacleHeight = obstacle.GetComponent<RectTransform>().rect.height;
+        float obstacleWidth = obstacle.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
+        float obstacleHeight = obstacle.GetComponent<RectTransform>().rect.height / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
         float distanceX = Math.Abs(position.x - obstacle.transform.position.x);
         float distanceY = Math.Abs(position.y - obstacle.transform.position.y);
 
@@ -122,8 +120,8 @@ public class BallMovement : MonoBehaviour
         Vector3 dot2;
         Vector3 dot3;
 
-        float obstacleWidth = obstacle.GetComponent<RectTransform>().rect.width;
-        float obstacleHeight = obstacle.GetComponent<RectTransform>().rect.height;
+        float obstacleWidth = obstacle.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
+        float obstacleHeight = obstacle.GetComponent<RectTransform>().rect.height / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
 
         if (position.x <= obstacle.transform.position.x - obstacleWidth / 2.0f || position.x >= obstacle.transform.position.x + obstacleWidth / 2.0f)
         {

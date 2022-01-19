@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4716782796779601833}
   - component: {fileID: 4315647594952506124}
-  - component: {fileID: 1983155532}
   - component: {fileID: 6898791595295029264}
   - component: {fileID: 8870411309629744427}
   m_Layer: 0
@@ -52,35 +51,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _leftBorder: {fileID: 0}
+  _canvas: {fileID: 0}
   _rightBorder: {fileID: 0}
   speed: 1.5
-  joystick: {fileID: 0}
---- !u!61 &1983155532
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8561727868103514465}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 2a485fef0f2727c4aa5b048613b8e4e8, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!222 &6898791595295029264
 CanvasRenderer:
   m_ObjectHideFlags: 0
