@@ -5,7 +5,7 @@ using System;
 
 public class BallMovement : MonoBehaviour
 {
-    public GameManager _gameManager;
+    public GameObject _gameManager;
 
     public GameObject _player;
 
@@ -19,14 +19,22 @@ public class BallMovement : MonoBehaviour
 
     protected Vector3 position;
 
-    protected float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width /2.0f; }
+    public float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width /2.0f; }
 
-    protected virtual void Start()
+    private void Start()
     {
         position = gameObject.transform.position;
         direction = new Vector3(0.1f, 1.0f, 0);
         speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
     }
+
+    private void Awake()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
+        _canvas = GameObject.FindGameObjectWithTag("GameField");
+        _gameManager = GameObject.FindGameObjectWithTag("GameController");
+    }
+
     protected virtual void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0))
@@ -80,7 +88,8 @@ public class BallMovement : MonoBehaviour
                     collision.animator.enabled = true;
                     collision.collision = true;
                     GameManager.obstacleCounter--;
-                    _gameManager.CreateBonusBall();
+                    Vector3 obstaclePosition = new Vector3(obstacle.transform.position.x, obstacle.transform.position.y, 0);
+                    _gameManager.GetComponent<GameManager>().CreateBonus(obstaclePosition);
                 }
             }
     }

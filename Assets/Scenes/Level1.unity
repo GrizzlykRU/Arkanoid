@@ -1248,7 +1248,7 @@ GameObject:
   - component: {fileID: 941237389}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1276,6 +1276,7 @@ MonoBehaviour:
   - {fileID: 8706938458816753779, guid: 3844f7b6320ac3241a7437f0f66e9b81, type: 3}
   - {fileID: 8726123890824020683, guid: 8c9bc9a878130d243a41d886999c2d56, type: 3}
   _bonusBallPrefab: {fileID: 4458082080761385375, guid: 6fcdb83bda305b04d968427bb08a27b5, type: 3}
+  _bonusPrefab: {fileID: 8561727868103514465, guid: 26719a1e42ce0614b9e69e87b2fca24b, type: 3}
 --- !u!4 &941237390
 Transform:
   m_ObjectHideFlags: 0
@@ -2259,7 +2260,7 @@ GameObject:
   - component: {fileID: 1842175601}
   m_Layer: 5
   m_Name: GameField
-  m_TagString: Untagged
+  m_TagString: GameField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

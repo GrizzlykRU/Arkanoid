@@ -5,14 +5,13 @@ using System;
 
 public class BonusBallMovement : BallMovement
 {
-    private DateTime startTime;
+    public DateTime startTime;
     protected override void FixedUpdate()
     {
         if (isActive)
         {
             position += direction * speed;
             transform.position = position;
-            Debug.Log((DateTime.Now - startTime).Seconds);
             if ((DateTime.Now - startTime).Seconds >= 10)
             {
                 DestroyBall();
@@ -20,24 +19,20 @@ public class BonusBallMovement : BallMovement
         }
     }
 
-    public void SetUp(GameObject player, GameObject canvas)
+    private void Awake()
     {
-        _player = player;
-        _canvas = canvas;
+        _player = GameObject.FindGameObjectWithTag("Player");
+        _canvas = GameObject.FindGameObjectWithTag("GameField");
         direction = new Vector3(0.1f, 1.0f, 0);
         speed *= 3;
         startTime = DateTime.Now;
         position.x = _player.transform.position.x;
         position.y = _player.transform.position.y + _player.GetComponent<RectTransform>().rect.height / 2.0f / _canvas.GetComponent<RectTransform>().rect.height * Screen.height
-                        + ballRadius / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
+                        + ballRadius + 1.0f;
         gameObject.transform.position = position;
         BonusBallOn bonusBall = _player.GetComponent<BonusBallOn>();
         bonusBall.bonusIsActive = true;
         isActive = true;
-    }
-
-    protected override void Start()
-    {
     }
 
     public override void GetCollision(List<GameObject> obstacles)
@@ -56,7 +51,6 @@ public class BonusBallMovement : BallMovement
                 }
                 if (CollisionCheck(obstacle))
                 {
-                    Debug.Log("Bonus collision");
                     if (obstacle.name == "BottomBorder")
                     {
                         DestroyBall();

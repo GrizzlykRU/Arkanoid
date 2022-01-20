@@ -1,0 +1,10 @@
+/Library
+/Logs
+/obj
+/Temp
+/UserSettings
+*.vsconfig
+*.rar
+.vs
+Arkanoid.sln
+*.csproj
