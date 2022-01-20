@@ -1275,6 +1275,7 @@ MonoBehaviour:
   - {fileID: 8241458361310420761, guid: e92d3f0e4076da546ab0e81dee17f8f9, type: 3}
   - {fileID: 8706938458816753779, guid: 3844f7b6320ac3241a7437f0f66e9b81, type: 3}
   - {fileID: 8726123890824020683, guid: 8c9bc9a878130d243a41d886999c2d56, type: 3}
+  _bonusBallPrefab: {fileID: 4458082080761385375, guid: 6fcdb83bda305b04d968427bb08a27b5, type: 3}
 --- !u!4 &941237390
 Transform:
   m_ObjectHideFlags: 0
@@ -1368,6 +1369,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950095243}
   m_CullTransparentMesh: 1
+--- !u!1 &1025006971 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6458452510089687182, guid: e92d3f0e4076da546ab0e81dee17f8f9, type: 3}
+  m_PrefabInstance: {fileID: 630650333542853571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1154639929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2608,7 +2614,11 @@ PrefabInstance:
     - target: {fileID: 337205532764818195, guid: e92d3f0e4076da546ab0e81dee17f8f9, type: 3}
       propertyPath: _canvas
       value: 
-      objectReference: {fileID: 1842175600}
+      objectReference: {fileID: 8835798130799228122}
+    - target: {fileID: 337205532764818195, guid: e92d3f0e4076da546ab0e81dee17f8f9, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1025006971}
     - target: {fileID: 1482833180881244899, guid: e92d3f0e4076da546ab0e81dee17f8f9, type: 3}
       propertyPath: _canvas
       value: 

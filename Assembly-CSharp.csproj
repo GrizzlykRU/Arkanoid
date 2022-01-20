@@ -69,6 +69,8 @@
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\Scripts\ObstacleCollision.cs" />
     <Compile Include="Assets\Scripts\GameOverMenu.cs" />
+    <Compile Include="Assets\Scripts\BonusBallMovement.cs" />
+    <Compile Include="Assets\Scripts\BonusBallOn.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

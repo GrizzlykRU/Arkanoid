@@ -18,9 +18,17 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> _obstacles;
 
+    public static int obstacleCounter;
+
     private GameObject _ball;
 
+    private GameObject _player;
+
     public List<GameObject> _levels;
+
+    public GameObject _bonusBallPrefab;
+
+    private GameObject _bonusBall;
 
     public static bool gameIsActive = true;
 
@@ -29,9 +37,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _ball = GameObject.FindGameObjectWithTag("Ball");
+        _ball.GetComponent<BallMovement>()._gameManager = this;
         _obstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
-        _ball.GetComponent<BallMovement>().obstacleCount = _obstacles.Count;
-        _obstacles.Add(GameObject.FindGameObjectWithTag("Player"));
+        obstacleCounter = _obstacles.Count;
+        _player = GameObject.FindGameObjectWithTag("Player");
+        _obstacles.Add(_player);
         _obstacles.AddRange(GameObject.FindGameObjectsWithTag("Border"));
     }
     private void Update()
@@ -61,6 +71,15 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         _ball.GetComponent<BallMovement>().GetCollision(_obstacles);
+        if (_bonusBall != null)
+        {
+            _bonusBall.GetComponent<BallMovement>().GetCollision(_obstacles);
+        }
+        if (obstacleCounter == 0)
+        {
+            _ball.SetActive(false);
+            LevelComplete();
+        }
     }
 
     public void LevelComplete()
@@ -83,7 +102,6 @@ public class GameManager : MonoBehaviour
     public void LoadLevel(int level)
     {
         Destroy(_level);
-        var obstaclesNum = 0;
         levelNumber = level;
         _level = Instantiate(_levels[level], _canvas.transform);
         _obstacles.Clear();
@@ -98,13 +116,24 @@ public class GameManager : MonoBehaviour
                 _obstacles.Add(child.gameObject);
                 if(child.tag == "Obstacle")
                 {
-                    obstaclesNum++;
+                    obstacleCounter++;
                 }
             }
 
         }
-        _ball.GetComponent<BallMovement>().obstacleCount = obstaclesNum;
         _completeLevelUI.SetActive(false);
+    }
+
+    public void CreateBonusBall()
+    {
+        int random = Random.Range(1, 10);
+        Debug.Log(random);
+        if(random == 1 && _bonusBall == null)
+        {
+            _bonusBall = Instantiate(_bonusBallPrefab, _level.transform);
+            var _ballMovement = _bonusBall.GetComponent<BonusBallMovement>();
+            _ballMovement.SetUp(_player, _canvas);
+        }
     }
     
 }

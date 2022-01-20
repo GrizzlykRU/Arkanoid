@@ -5,29 +5,29 @@ using System;
 
 public class BallMovement : MonoBehaviour
 {
+    public GameManager _gameManager;
+
     public GameObject _player;
 
     public GameObject _canvas;
 
-    public int obstacleCount = 0;
-
     public bool isActive = false;
 
-    public float speed = 1.0f;
+    public float speed = 6.0f;
 
-    private Vector3 direction;
+    protected Vector3 direction;
 
-    private Vector3 position;
+    protected Vector3 position;
 
-    private float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width /2.0f; }
+    protected float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width /2.0f; }
 
-    private void Start()
+    protected virtual void Start()
     {
         position = gameObject.transform.position;
         direction = new Vector3(0.1f, 1.0f, 0);
         speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
     }
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0))
         {
@@ -52,7 +52,7 @@ public class BallMovement : MonoBehaviour
         }
     }
 
-    public void GetCollision(List<GameObject> obstacles)
+    public virtual void GetCollision(List<GameObject> obstacles)
     {
 
         foreach (var obstacle in obstacles)
@@ -79,18 +79,14 @@ public class BallMovement : MonoBehaviour
                     ObstacleCollision collision = obstacle.GetComponent<ObstacleCollision>();
                     collision.animator.enabled = true;
                     collision.collision = true;
-                    obstacleCount--;
-                    if (obstacleCount == 0)
-                    {
-                        enabled = false;
-                        FindObjectOfType<GameManager>().LevelComplete();
-                    }
+                    GameManager.obstacleCounter--;
+                    _gameManager.CreateBonusBall();
                 }
             }
     }
     }
 
-    private bool CollisionCheck(GameObject obstacle)
+    protected bool CollisionCheck(GameObject obstacle)
     {
         float obstacleWidth = obstacle.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
         float obstacleHeight = obstacle.GetComponent<RectTransform>().rect.height / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
@@ -110,7 +106,7 @@ public class BallMovement : MonoBehaviour
         //return distance <= ballRadius * ballRadius;
     }
     
-    private Vector3 GetReflection(GameObject obstacle)
+    protected Vector3 GetReflection(GameObject obstacle)
     {
         Vector3 dot1;
         Vector3 dot2;
