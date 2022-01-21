@@ -7,19 +7,18 @@ public class SettingsMenu : MonoBehaviour
 {
     Resolution[] resolutions;
 
-    public Dropdown resolutionDropdown;
+    public Dropdown _resolutionDropdown;
 
-    public Dropdown quality;
+    public Dropdown _qualityDropdown;
 
-    public GameObject mainMenuUI;
+    public GameObject _mainMenuUI;
 
-    public GameObject settingsUI;
 
     public void Start()
     {
         resolutions = Screen.resolutions;
 
-        resolutionDropdown.ClearOptions();
+        _resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
 
@@ -36,10 +35,10 @@ public class SettingsMenu : MonoBehaviour
             }
         }
 
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
-        quality.value = QualitySettings.GetQualityLevel();
+        _resolutionDropdown.AddOptions(options);
+        _resolutionDropdown.value = currentResolutionIndex;
+        _resolutionDropdown.RefreshShownValue();
+        _qualityDropdown.value = QualitySettings.GetQualityLevel();
     }
 
     public void SetResolution(int resolutionIndex)
@@ -55,8 +54,8 @@ public class SettingsMenu : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        mainMenuUI.SetActive(true);
-        settingsUI.SetActive(false);
+        _mainMenuUI.SetActive(true);
+        gameObject.SetActive(false);
     }
 
 

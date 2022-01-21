@@ -5,17 +5,17 @@ public class LevelComplete : MonoBehaviour
 {
     public GameManager _gameManager;
 
-    private int level = 0;
-
     public void NextLevel()
     {
-        _gameManager.LoadLevel(++level);
+        _gameManager.LoadLevel(GameManager.levelNumber+1);
+        gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
     public void Retry()
     {
-        _gameManager.LoadLevel(level);
+        _gameManager.LoadLevel(GameManager.levelNumber);
+        gameObject.SetActive(false);
     }
 
     public void Quit()

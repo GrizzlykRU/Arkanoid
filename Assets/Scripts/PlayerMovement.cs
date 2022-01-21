@@ -43,4 +43,13 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position = position;
     }
+
+    private void OnCollisionEnter2D(Collision collision)
+    {
+        GameObject obstacle = collision.gameObject;
+        if(obstacle.tag == "Border")
+        {
+
+        }
+    }
 }

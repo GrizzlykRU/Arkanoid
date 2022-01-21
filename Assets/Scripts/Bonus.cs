@@ -13,13 +13,13 @@ public class Bonus : MonoBehaviour
 
     public GameObject _canvas;
 
+    public Rigidbody2D _rigidbody;
+
     public float speed = 6.0f;
 
-    protected Vector3 direction;
+    protected Vector2 velocity;
 
     protected Vector3 position;
-
-    protected float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width / 2.0f; }
 
     private void Awake()
     {
@@ -27,32 +27,30 @@ public class Bonus : MonoBehaviour
         _canvas = GameObject.FindGameObjectWithTag("GameField");
         _gameManager = GameObject.FindGameObjectWithTag("GameController");
         position = transform.position;
-        direction = new Vector3(0.0f, -1.0f, 0);
+        //velocity = new Vector2(0.0f, -1.0f).normalized * speed;
         speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
+        _rigidbody.velocity = new Vector2(0.0f, -1.0f).normalized * speed;
+
     }
 
     private void FixedUpdate()
     {
-        position += direction * speed;
-        transform.position = position;
-        if (CollisionCheck())
+        
+    }
+
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject obstacle = collision.gameObject;
+        if (obstacle.name == "BottomBorder")
+        {
+            Destroy(gameObject);
+        }
+
+        if (obstacle.tag == "Player")
         {
             _gameManager.GetComponent<GameManager>().CreateBonusBall();
             Destroy(gameObject);
         }
-    }
-
-    private bool CollisionCheck()
-    {
-        float playerWidth = _player.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
-        float playerHeight = _player.GetComponent<RectTransform>().rect.height / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
-        float distanceX = Math.Abs(position.x - _player.transform.position.x);
-        float distanceY = Math.Abs(position.y - _player.transform.position.y);
-
-        if (distanceX > (playerWidth / 2.0f + ballRadius)) { return false; }
-        if (distanceY > (playerHeight / 2.0f + ballRadius)) { return false; }
-
-        return true;
     }
 
 

@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 6854407769929347874}
   - component: {fileID: 458008446120860578}
   - component: {fileID: 2630248358761621423}
-  m_Layer: 0
+  - component: {fileID: 4444096805763447567}
+  - component: {fileID: 4414127910275038647}
+  m_Layer: 8
   m_Name: BonusBall
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -107,6 +109,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 0}
   _player: {fileID: 0}
-  _canvas: {fileID: 0}
+  _gameField: {fileID: 0}
   isActive: 0
-  speed: 6
+  speed: 300
+--- !u!58 &4444096805763447567
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4458082080761385375}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10
+--- !u!50 &4414127910275038647
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4458082080761385375}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: a8efc53e6559b7b4b9e21e7c9272e4a9, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0

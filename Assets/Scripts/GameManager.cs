@@ -12,13 +12,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject _gameIsDoneUI;
 
-    public GameObject _canvas;
+    public GameObject _gameField;
 
     public GameObject _level;
 
-    private List<GameObject> _obstacles;
-
-    public static int obstacleCounter;
+    public static int obstacleCounter = 0;
 
     private GameObject _ball;
 
@@ -32,62 +30,65 @@ public class GameManager : MonoBehaviour
 
     private GameObject _bonusBall;
 
-    public static bool gameIsActive = true;
+    public static bool gamePaused = false;
 
-    private int levelNumber = 0;
+    public static bool gameIsActive = false;
 
-    private void Start()
-    {
-        Time.timeScale = 1f;
-        _ball = GameObject.FindGameObjectWithTag("Ball");
-        _obstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
-        obstacleCounter = _obstacles.Count;
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _obstacles.Add(_player);
-        _obstacles.AddRange(GameObject.FindGameObjectsWithTag("Border"));
-    }
+    public static int levelNumber = 0;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (gameIsActive)
         {
-            Debug.Log("PRESSED");
-            if (gameIsActive)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                gameIsActive = false;
-                Time.timeScale = 0f;
-                _pauseMenuUI.SetActive(true);
+                Debug.Log("PRESSED");
+                if (!gamePaused)
+                {
+                    gamePaused = true;
+                    _gameField.SetActive(false);
+                    //Time.timeScale = 0f;
+                    _pauseMenuUI.SetActive(true);
+                }
+                else
+                {
+                    gamePaused = false;
+                    _gameField.SetActive(true);
+                    //Time.timeScale = 1f;
+                    _pauseMenuUI.SetActive(false);
+                }
             }
-            else
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                gameIsActive = true;
-                Time.timeScale = 1f;
-                _pauseMenuUI.SetActive(false);
+                LevelComplete();
             }
         }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            LevelComplete();
-        }
+       
     }
 
     private void FixedUpdate()
     {
-        _ball.GetComponent<BallMovement>().GetCollision(_obstacles);
-        if (_bonusBall != null)
+        if (gameIsActive)
         {
-            _bonusBall.GetComponent<BallMovement>().GetCollision(_obstacles);
+            //_ball.GetComponent<BallMovement>().GetCollision(_obstacles);
+            //if (_bonusBall != null)
+            //{
+            //    _bonusBall.GetComponent<BallMovement>().GetCollision(_obstacles);
+            //}
+            if (obstacleCounter <= 0)
+            {
+                //_ball.SetActive(false);
+                LevelComplete();
+            }
         }
-        if (obstacleCounter == 0)
-        {
-            _ball.SetActive(false);
-            LevelComplete();
-        }
+        
     }
 
     public void LevelComplete()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
+        gameIsActive = false;
+        _gameField.SetActive(false);
         if(levelNumber == _levels.Count-1)
         {
             _gameIsDoneUI.SetActive(true);
@@ -100,17 +101,24 @@ public class GameManager : MonoBehaviour
 
     public void GameOver() 
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
+        gameIsActive = false;
+        _gameField.SetActive(false);
         _gameOverlUI.SetActive(true);
     }
 
     public void LoadLevel(int level)
     {
-        Destroy(_level);
+        if(_level != null)
+        {
+            obstacleCounter = 0;
+            Destroy(_level);
+        }
+
         levelNumber = level;
-        _level = Instantiate(_levels[level], _canvas.transform);
-        _obstacles.Clear();
-        foreach(Transform child in _level.transform)
+        _level = Instantiate(_levels[level], _gameField.transform);
+
+        foreach (Transform child in _level.transform)
         {
             if (child.tag == "Ball")
             {
@@ -118,7 +126,6 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                _obstacles.Add(child.gameObject);
                 if(child.tag == "Obstacle")
                 {
                     obstacleCounter++;
@@ -131,16 +138,18 @@ public class GameManager : MonoBehaviour
         }
         var ballMovement = _ball.GetComponent<BallMovement>();
         ballMovement._player = _player;
-        ballMovement._canvas = _canvas;
-        ballMovement._gameManager = gameObject;
-        Time.timeScale = 1.0f;
-        _completeLevelUI.SetActive(false);
+        ballMovement._gameField = _gameField;
+        ballMovement._gameManager = this;
+        _gameField.SetActive(true);
+        gameIsActive = true;
+        Debug.Log("Start game : " + obstacleCounter);
+        //Time.timeScale = 1.0f;
+        //_completeLevelUI.SetActive(false);
     }
 
     public void CreateBonus(Vector3 obstaclePosition)
     {
         int random = Random.Range(1, 10);
-        Debug.Log(random);
         if(random >= 5)
         {
             var bonus = Instantiate(_bonusPrefab, obstaclePosition, new Quaternion(), _level.transform);
@@ -156,6 +165,7 @@ public class GameManager : MonoBehaviour
         else
         {
             _bonusBall = Instantiate(_bonusBallPrefab, _level.transform);
+            _bonusBall.GetComponent<BonusBallMovement>()._gameManager = this;
         }
     }
 

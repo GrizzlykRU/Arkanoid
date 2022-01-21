@@ -8,17 +8,18 @@ TagManager:
   - Ball
   - Border
   - GameField
+  - Bonus
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Obstacle
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Bonus
+  - Ball
+  - Border
   - 
   - 
   - 
