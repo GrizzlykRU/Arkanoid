@@ -1921,7 +1921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _completeLevelUI: {fileID: 88308968}
   _pauseMenuUI: {fileID: 542622426}
-  _gameOverlUI: {fileID: 547835165}
+  _gameOverUI: {fileID: 547835165}
   _gameIsDoneUI: {fileID: 1310484275}
   _gameField: {fileID: 1842175600}
   _level: {fileID: 0}
