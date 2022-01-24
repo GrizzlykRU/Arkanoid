@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             var pos = Input.mousePosition;
+            pos.x -= Screen.width / 2;
             position = new Vector3(pos.x, transform.position.y);
         }
 
@@ -42,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
         {
             position.x = rightBorder - width / 2.0f;
         }
-
         transform.position = position;
     }
 
