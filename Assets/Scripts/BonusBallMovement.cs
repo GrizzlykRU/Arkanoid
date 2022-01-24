@@ -29,7 +29,7 @@ public class BonusBallMovement : BallMovement
         velocity = new Vector2(0.1f, 1.0f).normalized * speed;
         startTime = DateTime.Now;
         position.x = _player.transform.position.x;
-        position.y = _player.transform.position.y + _player.GetComponent<RectTransform>().rect.height / 2.0f/ _gameField.GetComponent<RectTransform>().rect.height * Screen.height + ballRadius+1.0f;
+        position.y = _player.transform.position.y + _player.GetComponent<RectTransform>().rect.height / 2.0f/*/ _gameField.GetComponent<RectTransform>().rect.height * Screen.height*/ + ballRadius+1.0f;
         gameObject.transform.position = position;
         BonusBallOn bonusBall = _player.GetComponent<BonusBallOn>();
         bonusBall.bonusIsActive = true;

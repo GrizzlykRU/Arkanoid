@@ -28,7 +28,7 @@ public class Bonus : MonoBehaviour
         _gameManager = GameObject.FindGameObjectWithTag("GameController");
         position = transform.position;
         //velocity = new Vector2(0.0f, -1.0f).normalized * speed;
-        speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
+        //speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
         _rigidbody.velocity = new Vector2(0.0f, -1.0f).normalized * speed;
 
     }

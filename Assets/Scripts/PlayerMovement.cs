@@ -21,8 +21,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float borderWidth = _leftBorder.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
-        float width = gameObject.GetComponent<RectTransform>().rect.width / _canvas.GetComponent<RectTransform>().rect.width * Screen.width;
+        float borderWidth = _leftBorder.GetComponent<RectTransform>().rect.width 
+     /*       / _canvas.GetComponent<RectTransform>().rect.width * Screen.width*/;
+        float width = gameObject.GetComponent<RectTransform>().rect.width 
+            /*/ _canvas.GetComponent<RectTransform>().rect.width * Screen.width*/;
         if (Input.GetMouseButton(0))
         {
             var pos = Input.mousePosition;
@@ -44,12 +46,12 @@ public class PlayerMovement : MonoBehaviour
         transform.position = position;
     }
 
-    private void OnCollisionEnter2D(Collision collision)
-    {
-        GameObject obstacle = collision.gameObject;
-        if(obstacle.tag == "Border")
-        {
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    GameObject obstacle = collision.gameObject;
+    //    if(obstacle.tag == "Border")
+    //    {
 
-        }
-    }
+    //    }
+    //}
 }

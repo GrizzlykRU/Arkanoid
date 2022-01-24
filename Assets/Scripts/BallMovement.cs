@@ -21,14 +21,14 @@ public class BallMovement : MonoBehaviour
 
     protected Rigidbody2D _rigidbody;
 
-    public float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width / _gameField.GetComponent<RectTransform>().rect.width * Screen.width / 2.0f; }
+    public float ballRadius { get => gameObject.GetComponent<RectTransform>().rect.width /*/ _gameField.GetComponent<RectTransform>().rect.width * Screen.width*/ / 2.0f; }
 
     private void Start()
     {
         position = gameObject.transform.position;
         //velocity = new Vector3(0.1f, 1.0f, 0);
 
-        speed = speed / _gameField.GetComponent<RectTransform>().rect.height * Screen.height;
+        //speed = speed / _gameField.GetComponent<RectTransform>().rect.height * Screen.height;
         velocity = new Vector2(0.1f, 1.0f).normalized * speed;
         _rigidbody = this.GetComponent<Rigidbody2D>();
     }

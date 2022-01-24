@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject _pauseMenuUI;
 
-    public GameObject _gameOverlUI;
+    public GameObject _gameOverUI;
 
     public GameObject _gameIsDoneUI;
 
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     public static int levelNumber = 0;
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (gameIsActive)
         {
@@ -58,30 +58,13 @@ public class GameManager : MonoBehaviour
                     _pauseMenuUI.SetActive(false);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                LevelComplete();
-            }
-        }
-       
-    }
 
-    private void FixedUpdate()
-    {
-        if (gameIsActive)
-        {
-            //_ball.GetComponent<BallMovement>().GetCollision(_obstacles);
-            //if (_bonusBall != null)
-            //{
-            //    _bonusBall.GetComponent<BallMovement>().GetCollision(_obstacles);
-            //}
-            if (obstacleCounter <= 0)
+            if (Input.GetKeyDown(KeyCode.R) || obstacleCounter <= 0)
             {
-                //_ball.SetActive(false);
                 LevelComplete();
             }
         }
-        
+      
     }
 
     public void LevelComplete()
@@ -104,7 +87,7 @@ public class GameManager : MonoBehaviour
         //Time.timeScale = 0f;
         gameIsActive = false;
         _gameField.SetActive(false);
-        _gameOverlUI.SetActive(true);
+        _gameOverUI.SetActive(true);
     }
 
     public void LoadLevel(int level)
