@@ -10,6 +10,10 @@ public class BonusBallOn : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.gameOver || GameManager.levelComplete)
+        {
+            bonusIsActive = false;
+        }
         if (bonusIsActive)
         {
             animator.SetBool("BonusBall", true);

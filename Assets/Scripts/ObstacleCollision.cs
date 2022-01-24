@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class ObstacleCollision : MonoBehaviour
 {
-    public Animator animator;
+    public Animator _animator;
 
     private GameObject _gameManager;
 
     public BoxCollider2D _colider;
 
     public bool collisionEntered = false;
+
+    public bool gameOver = false;
 
     void Awake()
     {
@@ -20,14 +22,17 @@ public class ObstacleCollision : MonoBehaviour
     {
         if (collisionEntered)
         {
-            animator.SetBool("Collision", true);
+            _animator.SetBool("Collision", true);
+        }
+        if (GameManager.gameOver)
+        {
+            _animator.SetBool("GameOver", true);
         }
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject projectile = collision.gameObject;
-        animator.enabled = true;
         collisionEntered = true;
         _colider.enabled = false;
         GameManager.obstacleCounter--;

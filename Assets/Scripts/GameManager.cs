@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,9 +31,15 @@ public class GameManager : MonoBehaviour
 
     private GameObject _bonusBall;
 
+    private List<ObstacleCollision> _obstacles = new List<ObstacleCollision>();
+    
     public static bool gamePaused = false;
 
     public static bool gameIsActive = false;
+
+    public static bool gameOver = false;
+
+    public static bool levelComplete = false;
 
     public static int levelNumber = 0;
 
@@ -47,30 +54,30 @@ public class GameManager : MonoBehaviour
                 {
                     gamePaused = true;
                     _gameField.SetActive(false);
-                    //Time.timeScale = 0f;
                     _pauseMenuUI.SetActive(true);
                 }
                 else
                 {
                     gamePaused = false;
                     _gameField.SetActive(true);
-                    //Time.timeScale = 1f;
                     _pauseMenuUI.SetActive(false);
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.R) || obstacleCounter <= 0)
             {
-                LevelComplete();
+                StartCoroutine(LevelComplete());
             }
         }
       
     }
 
-    public void LevelComplete()
+    public IEnumerator LevelComplete()
     {
         //Time.timeScale = 0f;
         gameIsActive = false;
+        levelComplete = true;
+        yield return new WaitForSecondsRealtime(2.0f);
         _gameField.SetActive(false);
         if(levelNumber == _levels.Count-1)
         {
@@ -80,21 +87,35 @@ public class GameManager : MonoBehaviour
         {
             _completeLevelUI.SetActive(true);
         }
+        yield break;
     }
 
-    public void GameOver() 
+    //public void GameOver() 
+    //{
+    //    //Time.timeScale = 0f;
+    //    gameIsActive = false;
+    //    _gameField.SetActive(false);
+    //    _gameOverUI.SetActive(true);
+    //}
+
+    public IEnumerator GameOver()
     {
-        //Time.timeScale = 0f;
         gameIsActive = false;
+        gameOver = true;
+        yield return new WaitForSecondsRealtime(2.0f);   
         _gameField.SetActive(false);
         _gameOverUI.SetActive(true);
+        yield break;
     }
 
     public void LoadLevel(int level)
     {
         if(_level != null)
         {
+            levelComplete = false;
+            gameOver = false;
             obstacleCounter = 0;
+            _obstacles.Clear();
             Destroy(_level);
         }
 
@@ -111,6 +132,7 @@ public class GameManager : MonoBehaviour
             {
                 if(child.tag == "Obstacle")
                 {
+                    _obstacles.Add(child.gameObject.GetComponent<ObstacleCollision>());
                     obstacleCounter++;
                 }
                 else if (child.tag == "Player")
@@ -125,9 +147,6 @@ public class GameManager : MonoBehaviour
         ballMovement._gameManager = this;
         _gameField.SetActive(true);
         gameIsActive = true;
-        Debug.Log("Start game : " + obstacleCounter);
-        //Time.timeScale = 1.0f;
-        //_completeLevelUI.SetActive(false);
     }
 
     public void CreateBonus(Vector3 obstaclePosition)

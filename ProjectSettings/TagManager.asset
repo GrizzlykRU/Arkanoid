@@ -9,6 +9,7 @@ TagManager:
   - Border
   - GameField
   - Bonus
+  - BonusBall
   layers:
   - Default
   - TransparentFX

@@ -6,9 +6,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject _leftBorder;
 
-    public GameObject _canvas;
-
     public GameObject _rightBorder;
+
+    public Rigidbody2D _rigidbody;
 
     public float speed = 1.0f;
 
@@ -19,39 +19,40 @@ public class PlayerMovement : MonoBehaviour
         position = gameObject.transform.position;
     }
 
+
     private void FixedUpdate()
     {
-        float borderWidth = _leftBorder.GetComponent<RectTransform>().rect.width 
-     /*       / _canvas.GetComponent<RectTransform>().rect.width * Screen.width*/;
-        float width = gameObject.GetComponent<RectTransform>().rect.width 
-            /*/ _canvas.GetComponent<RectTransform>().rect.width * Screen.width*/;
-        if (Input.GetMouseButton(0))
+        if (GameManager.gameIsActive)
         {
-            var pos = Input.mousePosition;
-            pos.x -= Screen.width / 2;
-            position = new Vector3(pos.x, transform.position.y);
-        }
+            float borderWidth = _leftBorder.GetComponent<RectTransform>().rect.width;
+            float width = gameObject.GetComponent<RectTransform>().rect.width;
+            if (Input.GetMouseButton(0))
+            {
+                var pos = Input.mousePosition;
+                pos.x -= Screen.width / 2;
+                position = new Vector3(pos.x, transform.position.y);
+            }
 
-        float leftBorder = _leftBorder.transform.position.x + borderWidth / 2.0f,
-              rightBorder = _rightBorder.transform.position.x - borderWidth / 2.0f;
+            float leftBorder = _leftBorder.transform.position.x + borderWidth / 2.0f,
+                  rightBorder = _rightBorder.transform.position.x - borderWidth / 2.0f;
 
-        if (position.x - width / 2.0f < leftBorder)
-        {
-            position.x = leftBorder + width / 2.0f;
+            if (position.x - width / 2.0f < leftBorder)
+            {
+                position.x = leftBorder + width / 2.0f;
+            }
+            else if (position.x + width / 2.0f > rightBorder)
+            {
+                position.x = rightBorder - width / 2.0f;
+            }
+            transform.position = position;
         }
-        else if (position.x + width / 2.0f > rightBorder)
+        else if (GameManager.gameOver)
         {
-            position.x = rightBorder - width / 2.0f;
+            _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
-        transform.position = position;
+        else if (GameManager.levelComplete)
+        {
+            _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    GameObject obstacle = collision.gameObject;
-    //    if(obstacle.tag == "Border")
-    //    {
-
-    //    }
-    //}
 }

@@ -27,15 +27,16 @@ public class Bonus : MonoBehaviour
         _canvas = GameObject.FindGameObjectWithTag("GameField");
         _gameManager = GameObject.FindGameObjectWithTag("GameController");
         position = transform.position;
-        //velocity = new Vector2(0.0f, -1.0f).normalized * speed;
-        //speed = speed / _canvas.GetComponent<RectTransform>().rect.height * Screen.height;
         _rigidbody.velocity = new Vector2(0.0f, -1.0f).normalized * speed;
 
     }
 
     private void FixedUpdate()
     {
-        
+        if (GameManager.gameOver || GameManager.levelComplete)
+        {
+            _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)

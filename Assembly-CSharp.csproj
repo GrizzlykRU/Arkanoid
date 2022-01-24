@@ -65,13 +65,15 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
+    <Compile Include="Assets\Scripts\Bonus.cs" />
     <Compile Include="Assets\Scripts\GameOverMenu.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\LevelComplete.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\Scripts\ObstacleCollision.cs" />
-    <Compile Include="Assets\Scripts\Bonus.cs" />
+    <Compile Include="Assets\Scripts\BottomTriggerEnter.cs" />
+    <Compile Include="Assets\Scripts\PlayerLevelComplete.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

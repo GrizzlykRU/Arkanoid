@@ -17,7 +17,6 @@ public class GameOverMenu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
     public void Quit()
     {
         _mainMenuUI.SetActive(true);
